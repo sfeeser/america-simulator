@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fix the Future: Your America Simulator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Fix the Future: Your America Simulator</h1>
+    <p>Choose options to shape the U.S. economy and see how it affects you!</p>
+
+    <div class="options">
+      <h2>Your Choices <a href="https://stuartfeeser.com/blogs/doge/index.html" target="_blank" style="font-size: 0.8em; margin-left: 5px;">(Learn More)</a></h2>
+      <label>
+        <input type="checkbox" id="uscbRefinance" checked> U.S. Citizens’ Bank: Refinance mortgages at 2%
+        <a href="https://stuartfeeser.com/blogs/doge/idea6/index.html" target="_blank" style="font-size: 0.8em; margin-left: 5px;">(Learn More)</a>
+        <span id="uscbRevenue" style="float: right; font-size: 0.8em; margin-left: 10px;">120 $B</span>
+      </label>
+      <label>
+        <input type="checkbox" id="matchingTariffs" checked> Matching Tariffs: Mirror other countries’ rates
+        <span id="tariffRevenue" style="float: right; font-size: 0.8em; margin-left: 10px;">170 $B</span>
+      </label>
+      <label id="slimGovLabel">
+        <input type="checkbox" id="slimGov" checked> Slim Government: Cut to core + phase out extras
+        <span id="slimGovRevenue" style="float: right; font-size: 0.8em; margin-left: 10px;">0 $B</span>
+      </label>
+      <label id="safetyNetsLabel">
+        <input type="checkbox" id="keepSafetyNets" checked> Keep Social Security & Medicare
+        <span id="safetyNetRevenue" style="float: right; font-size: 0.8em; margin-left: 10px;">0 $B</span>
+      </label>
+      <div id="militaryLabel" style="display: inline;">
+        <label style="margin-right: 10px;">Military Spending Reduction:</label>
+        <label style="display: inline-block; margin-right: 10px;"><input type="radio" name="militaryReduction" value="0" checked> None</label>
+        <label style="display: inline-block; margin-right: 10px;"><input type="radio" name="militaryReduction" value="10"> -10%</label>
+        <label style="display: inline-block; margin-right: 10px;"><input type="radio" name="militaryReduction" value="20"> -20%</label>
+        <label style="display: inline-block; margin-right: 10px;"><input type="radio" name="militaryReduction" value="30"> -30%</label>
+        <label style="display: inline-block; margin-right: 10px;"><input type="radio" name="militaryReduction" value="40"> -40%</label>
+        <span id="militaryRevenue" style="float: right; font-size: 0.8em; margin-left: 10px;">0 $B</span>
+      </div>
+      <label id="medicaidLabel">
+        <input type="checkbox" id="keepMedicaid" checked> Keep Medicaid Spending
+        <span id="medicaidRevenue" style="float: right; font-size: 0.8em; margin-left: 10px;">0 $B</span>
+      </label>
+      <label id="veteransLabel">
+        <input type="checkbox" id="keepVeterans" checked> Keep Veterans' Benefits
+        <span id="veteransRevenue" style="float: right; font-size: 0.8em; margin-left: 10px;">0 $B</span>
+      </label>
+      <label>
+        Alternate: <input type="checkbox" id="noCuts"> No budget cuts (full $6.1T spending)
+        <span id="noCutsRevenue" style="float: right; font-size: 0.8em; margin-left: 10px;">0 $B</span>
+      </label>
+      <label>
+        <input type="range" id="taxRate" min="-10" max="10" value="0"> Extra Tax Rate: <span id="taxValue">0%</span>
+        <span id="taxRevenue" style="float: right; font-size: 0.8em; margin-left: 10px;">0 $B</span>
+      </label>
+      <label>
+        <input type="checkbox" id="boomPhase"> Boom Phase: +2% job growth (needs USCB & Tariffs for housing/manufacturing boost)
+        <span id="boomRevenue" style="float: right; font-size: 0.8em; margin-left: 10px;">0 $B</span>
+      </label>
+      <div style="display: inline;">
+        <label style="margin-right: 10px;">Gold Card Program ($5M per card):</label>
+        <label style="display: inline-block; margin-right: 10px;"><input type="radio" name="goldCardAmount" value="0" checked> None</label>
+        <label style="display: inline-block; margin-right: 10px;"><input type="radio" name="goldCardAmount" value="10000"> 10K</label>
+        <label style="display: inline-block; margin-right: 10px;"><input type="radio" name="goldCardAmount" value="100000"> 100K</label>
+        <label style="display: inline-block; margin-right: 10px;"><input type="radio" name="goldCardAmount" value="1000000"> 1M</label>
+        <label style="display: inline-block; margin-right: 10px;"><input type="radio" name="goldCardAmount" value="10000000"> 10M</label>
+        <span id="goldCardRevenue" style="float: right; font-size: 0.8em; margin-left: 10px;">0 $B</span>
+      </div>
+      <label style="font-weight: bold;">See Your Mortgage Savings!</label>
+      <label>
+        Your Loan Balance: $<input type="number" id="mortgageAmount" min="0" max="10000000" value="300000" style="width: 100px;">
+      </label>
+      <label>
+        Your Current Rate: <input type="number" id="mortgageInterest" min="0" max="20" step="0.1" value="5" style="width: 60px;">% (USCB drops it to 2%)
+      </label>
+    </div>
+
+    <button onclick="calculateOutcomes()">See Your Future</button>
+
+    <div class="results" id="results">
+      <h2>Your Impact</h2>
+      <p><strong>Your Monthly Mortgage:</strong> <span id="mortgage">$1,600</span></p>
+      <p><strong>Job Market Outlook:</strong> <span id="jobOutlook">Stable (±0 million)</span></p>
+      <p><strong>Job Growth:</strong> <span id="jobs">0%</span> <span id="boomNote"></span></p>
+      <p><strong>Social Security & Medicare:</strong> <span id="safetyNets">Stable</span></p>
+      <p><strong>Other Services (Schools, Roads):</strong> <span id="otherServices">Stable</span></p>
+      <p><strong>Adjusted Tax Rate:</strong> <span id="adjustedTax">0%</span></p>
+      <p><strong>National Debt Payoff:</strong> <span id="debtYears">30+ years</span></p>
+      <p><strong>Citizen Impact Score:</strong> <span id="impactScore">50/100</span></p>
+      <p><strong>Estimated Inflation/Deflation:</strong> <span id="inflation">0%</span></p>
+      <canvas id="debtChart" width="400" height="200"></canvas>
+      <p><em>Social Security Funding Goal $2.4 T</em></p>
+      <canvas id="safetyNetChart" width="400" height="200"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

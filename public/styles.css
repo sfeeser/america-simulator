@@ -1,0 +1,31 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+h1, h2 { color: #333; }
+.options label { display: block; margin: 10px 0; }
+button {
+  padding: 10px 20px;
+  background: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover { background: #0056b3; }
+.results { margin-top: 20px; }
+canvas { margin-top: 20px; }
+.failing {
+  color: #FF0000; /* Bright red */
+  font-weight: bold;
+}
